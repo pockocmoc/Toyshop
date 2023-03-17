@@ -1,7 +1,6 @@
 package com.pockocmoc.sabirov.marat.model;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 public class AwardedPrize extends Prize{
     private LocalDateTime dateTimeAwarded;
