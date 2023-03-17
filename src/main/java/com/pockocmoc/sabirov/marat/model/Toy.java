@@ -47,11 +47,11 @@ public class Toy {
 
     @Override
     public String toString() {
-        return "Toy{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", amount=" + amount +
-                ", dropFrequency=" + dropFrequency +
-                '}';
+        return "Игрушка [" +
+                "№ = " + id +
+                ", название = '" + name + '\'' +
+                ", количество = " + amount +
+                ", шанс выпадения = " + dropFrequency + " %" +
+                ']';
     }
 }
