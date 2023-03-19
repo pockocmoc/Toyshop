@@ -13,6 +13,7 @@ public class Toy {
         this.dropFrequency = dropFrequency;
     }
 
+
     public int getId() {
         return id;
     }

@@ -1,11 +1,11 @@
 package com.pockocmoc.sabirov.marat.model;
 
 public class Buyer {
-private int id;
-private String name;
-private String surname;
-private int checkNumber;
-private int phoneNumber;
+    private int id;
+    private String name;
+    private String surname;
+    private int checkNumber;
+    private int phoneNumber;
 
     public Buyer(int id, String name, String surname, int checkNumber, int phoneNumber) {
         this.id = id;

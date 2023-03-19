@@ -1,22 +1,26 @@
 package com.pockocmoc.sabirov.marat;
 
-import com.pockocmoc.sabirov.marat.controller.DataBase;
 import com.pockocmoc.sabirov.marat.model.Toy;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
+import com.pockocmoc.sabirov.marat.view.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Toy toy = new Toy(1, "Кубик рубик", 400, 10);
-        System.out.println(toy);
+    public static void main(String[] args) {
 
-        String fileName = "toys.csv";
-        FileWriter fileWriter = new FileWriter(fileName);
+        View view = new View();
+        view.run();
 
+//        List<Buyer> buyers = new ArrayList<>();
+//        buyers.add(new Buyer(1, "Егор", "Летов", 23, 12345));
+//        buyers.add(new Buyer(2, "Джаред", "Летов", 34, 54233));
+//
+//        BuyerCSVHandler buyerCSVHandler = new BuyerCSVHandler();
+//        buyerCSVHandler.writeToFile(FILE_NAME_BUYERS, buyers);
 
-        fileWriter.append(String.valueOf(toy));
-        fileWriter.flush();
+//        System.out.println(ToyCSVHandler.readFromFile(FILE_NAME_TOYS));
+
     }
 }
