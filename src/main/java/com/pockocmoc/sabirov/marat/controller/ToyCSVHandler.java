@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ToyCSVHandler {
     private static final String CSV_SEPARATOR = ",";
-    private static final String FILE_HEADER = "id,name,amount,dropFrequency";
+//    private static final String FILE_HEADER = "id,name,amount,dropFrequency";
 
 
     public static void writeToFile(String fileName, List<Toy> toys) {

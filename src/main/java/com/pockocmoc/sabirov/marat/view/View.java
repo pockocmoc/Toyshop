@@ -10,7 +10,7 @@ public class View {
     public void run() {
         int numberOfMenu = 0;
         do {
-            Menu.pageOne();
+            Menu.pageToyView();
             numberOfMenu = choice.choice();
             switch (numberOfMenu) {
                 case 1:
