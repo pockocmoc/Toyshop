@@ -9,7 +9,9 @@ public class View {
     final String FILE_NAME_TOYS = "./src/main/java/com/pockocmoc/sabirov/marat/db/toys.csv";
     final String FILE_NAME_BUYERS = "./src/main/java/com/pockocmoc/sabirov/marat/db/buyers.csv";
 
+
     public void run() {
+
         Scanner scanner = new Scanner(System.in);
         int numberOfMenu;
         do {
@@ -27,8 +29,7 @@ public class View {
                     break;
                 case 2:
                     // Добавление новой игрушки
-                    ToyHandler toyHandler = new ToyHandler();
-                    toyHandler.addNewToy();
+                    ToyHandler.addNewToy();
                     break;
                 case 3:
                     // Изменение веса игрушки

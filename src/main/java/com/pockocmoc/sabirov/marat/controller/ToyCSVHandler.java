@@ -15,9 +15,9 @@ public class ToyCSVHandler {
 
 
     public static void writeToFile(String fileName, List<Toy> toys) {
-        try (FileWriter writer = new FileWriter(fileName)) {
-            writer.append(FILE_HEADER);
-            writer.append("\n");
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+//            writer.append(FILE_HEADER);
+//            writer.append("\n");
 
             for (Toy toy : toys) {
                 writer.append(String.valueOf(toy.getId()));
