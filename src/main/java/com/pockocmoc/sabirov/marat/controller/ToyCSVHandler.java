@@ -54,6 +54,7 @@ public class ToyCSVHandler {
                 int amount = Integer.parseInt(fields[2]);
                 int dropFrequency = Integer.parseInt(fields[3]);
 
+
                 Toy toy = new Toy(id, name, amount, dropFrequency);
                 toys.add(toy);
             }

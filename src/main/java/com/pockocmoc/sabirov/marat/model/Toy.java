@@ -15,8 +15,7 @@ public class Toy {
         this.dropFrequency = dropFrequency;
     }
 
-    public void toys(List<Toy> toys) {
-    }
+
 
 
     public int getId() {
@@ -53,9 +52,9 @@ public class Toy {
 
     @Override
     public String toString() {
-        return "Игрушка " +
-                "№ = " + id +
-                ",  '" + name + '\'' +
+        return "\nИгрушка " +
+                "№ " + id +
+                ", '" + name + '\'' +
                 ", количество: " + amount +
                 ", шанс выпадения: " + dropFrequency + " %";
     }

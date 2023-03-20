@@ -16,11 +16,11 @@ public class ToyHandler {
 
     public static void addNewToy() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter toy name:");
+        System.out.println("Введите имя игрушки: ");
         String name = scanner.nextLine();
-        System.out.println("Enter amount of toys:");
+        System.out.println("Введите количество игрушек: ");
         int amount = scanner.nextInt();
-        System.out.println("Enter drop frequency of toys:");
+        System.out.println("Введите вес игрушки(шанс выпадения): ");
         int dropFrequency = scanner.nextInt();
         toys.add(new Toy(getNewToyId(), name, amount, dropFrequency));
         ToyCSVHandler.writeToFile(FILE_NAME_TOYS, toys);
@@ -32,7 +32,6 @@ public class ToyHandler {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME_TOYS));
 
             while (reader.readLine() != null) count++;
-            System.out.println("Количество строк в файле: " + count);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
