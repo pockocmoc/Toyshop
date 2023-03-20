@@ -1,5 +1,7 @@
 package com.pockocmoc.sabirov.marat.model;
 
+import java.util.List;
+
 public class Toy {
     private int id;
     private String name;
@@ -11,6 +13,9 @@ public class Toy {
         this.name = name;
         this.amount = amount;
         this.dropFrequency = dropFrequency;
+    }
+
+    public void toys(List<Toy> toys) {
     }
 
 
@@ -48,11 +53,10 @@ public class Toy {
 
     @Override
     public String toString() {
-        return "Игрушка [" +
+        return "Игрушка " +
                 "№ = " + id +
-                ", название = '" + name + '\'' +
-                ", количество = " + amount +
-                ", шанс выпадения = " + dropFrequency + " %" +
-                ']';
+                ",  '" + name + '\'' +
+                ", количество: " + amount +
+                ", шанс выпадения: " + dropFrequency + " %";
     }
 }

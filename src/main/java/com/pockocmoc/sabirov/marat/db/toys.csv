@@ -1,5 +1,10 @@
 id,name,amount,dropFrequency
-1,Teddy Bear,10,5
-2,Lego Set,4,3
-3,Barbie Doll,8,4
-4,Barbie Boy,3,2
+1,Duplo,10,5
+1,Barby,3,2
+0,Logog,2,4
+0,Logog,2,4
+1,skf,3,5
+6,YoYo,3,2
+8,Tetris,3,5
+8,Gop,2,4
+9,Ball,2,4
