@@ -19,9 +19,9 @@ public class ToyHandler {
         int amount = scanner.nextInt();
         System.out.println("Введите частоту выпадения новой игрушки:");
         int dropFrequency = scanner.nextInt();
-        Toy toys = new Toy(id, name, amount, dropFrequency);
+        Toy  = new Toy(id, name, amount, dropFrequency);
         // здесь можно добавить новую игрушку в какой-то список или базу данных
 //        ToyCSVHandler toyCSVHandler = new ToyCSVHandler();
-        ToyCSVHandler.writeToFile(FILE_NAME_TOYS, (List<Toy>) toys);
+        ToyCSVHandler.writeToFile(FILE_NAME_TOYS, toys);
     }
 }
