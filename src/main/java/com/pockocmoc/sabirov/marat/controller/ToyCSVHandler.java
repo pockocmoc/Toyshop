@@ -34,6 +34,28 @@ public class ToyCSVHandler {
         }
     }
 
+    public static void updateToyDropFrequencyById(String fileName, int id, int newDropFrequency) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            List<Toy> toys = new ArrayList<>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(CSV_SEPARATOR);
+                int toyId = Integer.parseInt(fields[0]);
+                String name = fields[1];
+                int amount = Integer.parseInt(fields[2]);
+                int dropFrequency = Integer.parseInt(fields[3]);
+                if (toyId == id) {
+                    toys.add(new Toy(toyId, name, amount, newDropFrequency));
+                } else {
+                    toys.add(new Toy(toyId, name, amount, dropFrequency));
+                }
+            }
+            writeToFile(fileName, toys);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static List<Toy> readFromFile(String fileName) {
         List<Toy> toys = new ArrayList<>();
 
