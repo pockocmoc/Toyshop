@@ -20,6 +20,7 @@ public class Run {
                     runBuyers();
                     break;
                 case 3:
+                    runDrawingToys();
                     break;
                 case 4:
                     break;
@@ -85,6 +86,28 @@ public class Run {
                     int num = InputNumberValidator.choice();
                     BuyerCSVHandler.removeBuyer(FILE_NAME_BUYERS, num);
                     System.out.println("Покупатель удален!");
+                    break;
+                case 4:
+                    break;
+                default:
+                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
+            }
+        } while (numberOfMenu != 4);
+    }
+    public void runDrawingToys() {
+        int numberOfMenu;
+        do {
+            ViewMenu.pageToysDrawingView();
+            numberOfMenu = InputNumberValidator.choice();
+            switch (numberOfMenu) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
                     break;
                 case 4:
                     break;

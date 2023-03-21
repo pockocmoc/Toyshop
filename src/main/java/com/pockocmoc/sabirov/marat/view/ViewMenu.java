@@ -22,9 +22,9 @@ public class ViewMenu {
         System.out.println("Выберите пункт меню:");
         System.out.println("1. Посмотреть все игрушки.");
         System.out.println("2. Добавить новую игрушку.");
-        System.out.println("3. Изменить вес игрушки(шанс выпадения игрушки)");
+        System.out.println("3. Изменить вес игрушки(шанс выпадения игрушки).");
         System.out.println("4. Удалить игрушку.");
-        System.out.println("5. Выход в главное меню");
+        System.out.println("5. Выход в главное меню.");
     }
     public static void pageBuyersView() {
         delimiter();
@@ -34,7 +34,7 @@ public class ViewMenu {
         System.out.println("1. Посмотреть список покупателей.");
         System.out.println("2. Добавить нового покупателя.");
         System.out.println("3. Удалить покупателя.");
-        System.out.println("4. Выход в главное меню");
+        System.out.println("4. Выход в главное меню.");
     }
     public static void pageToysDrawingView() {
         delimiter();
@@ -44,6 +44,6 @@ public class ViewMenu {
         System.out.println("1. Список призовых игрушек.");
         System.out.println("2. Разыграть игрушку, для добавления ее в список призовых игрушек.");
         System.out.println("3. Получить призовую игрушку из списка.");
-        System.out.println("4. Выход из программы.");
+        System.out.println("4. Выход в главное меню.");
     }
 }
