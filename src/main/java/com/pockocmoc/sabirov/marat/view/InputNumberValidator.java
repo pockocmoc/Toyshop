@@ -2,7 +2,7 @@ package com.pockocmoc.sabirov.marat.view;
 
 import java.util.Scanner;
 
-public class ChoiceConsoleNumber {
+public class InputNumberValidator {
     public static int choice() {
         Scanner scanner = new Scanner(System.in);
         int num;

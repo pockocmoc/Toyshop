@@ -5,30 +5,68 @@ import com.pockocmoc.sabirov.marat.model.Toy;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ToyCSVHandler {
     private static final String CSV_SEPARATOR = ",";
+    private static final String FILE_NAME_TOYS = "./src/main/java/com/pockocmoc/sabirov/marat/db/toys.csv";
+    static List<Toy> toys = new ArrayList<>();
 //    private static final String FILE_HEADER = "id,name,amount,dropFrequency";
 
 
     public static void writeToFile(String fileName, List<Toy> toys) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
 
-            for (Toy toy : toys) {
-                writer.append(String.valueOf(toy.getId()));
-                writer.append(CSV_SEPARATOR);
-                writer.append(toy.getName());
-                writer.append(CSV_SEPARATOR);
-                writer.append(String.valueOf(toy.getAmount()));
-                writer.append(CSV_SEPARATOR);
-                writer.append(String.valueOf(toy.getDropFrequency()));
-                writer.append("\n");
-            }
-
-            writer.flush();
+            appendToFileLine(toys, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void addNewToy() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите имя игрушки: ");
+        String name = scanner.nextLine();
+        System.out.println("Введите количество игрушек: ");
+        int amount = scanner.nextInt();
+        System.out.println("Введите вес игрушки(шанс выпадения): ");
+        int dropFrequency = scanner.nextInt();
+        toys.add(new Toy(getNewToyId(), name, amount, dropFrequency));
+        ToyCSVHandler.writeToFile(FILE_NAME_TOYS, toys);
+    }
+
+    private static int getNewToyId() {
+        int maxId = 0;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME_TOYS));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                int id = Integer.parseInt(values[0].replaceAll("\"", ""));
+                if (id > maxId) {
+                    maxId = id;
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return maxId + 1;
+    }
+
+    private static void appendToFileLine(List<Toy> toys, FileWriter writer) throws IOException {
+        for (Toy toy : toys) {
+            writer.append(String.valueOf(toy.getId()));
+            writer.append(CSV_SEPARATOR);
+            writer.append(toy.getName());
+            writer.append(CSV_SEPARATOR);
+            writer.append(String.valueOf(toy.getAmount()));
+            writer.append(CSV_SEPARATOR);
+            writer.append(String.valueOf(toy.getDropFrequency()));
+            writer.append("\n");
+        }
+
+        writer.flush();
     }
 
     public static void updateToyDropFrequencyById(String fileName, int id, int newDropFrequency) {
@@ -58,13 +96,8 @@ public class ToyCSVHandler {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
-//            boolean isFirstLine = true;
 
             while ((line = reader.readLine()) != null) {
-//                if (isFirstLine) {
-//                    isFirstLine = false;
-//                    continue;
-//                }
 
                 String[] fields = line.split(CSV_SEPARATOR);
 
@@ -100,18 +133,7 @@ public class ToyCSVHandler {
     public static void overwriteFile(String fileName, List<Toy> toys) {
         try (FileWriter writer = new FileWriter(fileName)) {
 
-            for (Toy toy : toys) {
-                writer.append(String.valueOf(toy.getId()));
-                writer.append(CSV_SEPARATOR);
-                writer.append(toy.getName());
-                writer.append(CSV_SEPARATOR);
-                writer.append(String.valueOf(toy.getAmount()));
-                writer.append(CSV_SEPARATOR);
-                writer.append(String.valueOf(toy.getDropFrequency()));
-                writer.append("\n");
-            }
-
-            writer.flush();
+            appendToFileLine(toys, writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
