@@ -2,10 +2,7 @@ package com.pockocmoc.sabirov.marat.controller;
 
 import com.pockocmoc.sabirov.marat.model.Toy;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +47,7 @@ public class ToyCSVHandler {
                     toys.add(new Toy(toyId, name, amount, dropFrequency));
                 }
             }
-            writeToFile(fileName, toys);
+            overwriteFile(fileName, toys);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,13 +58,13 @@ public class ToyCSVHandler {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
-            boolean isFirstLine = true;
+//            boolean isFirstLine = true;
 
             while ((line = reader.readLine()) != null) {
-                if (isFirstLine) {
-                    isFirstLine = false;
-                    continue;
-                }
+//                if (isFirstLine) {
+//                    isFirstLine = false;
+//                    continue;
+//                }
 
                 String[] fields = line.split(CSV_SEPARATOR);
 
@@ -85,5 +82,38 @@ public class ToyCSVHandler {
         }
 
         return toys;
+    }
+
+    public static void removeToy(String fileName, int id) {
+        List<Toy> toys = readFromFile(fileName);
+
+        for (Toy toy : toys) {
+            if (toy.getId() == id) {
+                toys.remove(toy);
+                break;
+            }
+        }
+
+        overwriteFile(fileName, toys);
+    }
+
+    public static void overwriteFile(String fileName, List<Toy> toys) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+
+            for (Toy toy : toys) {
+                writer.append(String.valueOf(toy.getId()));
+                writer.append(CSV_SEPARATOR);
+                writer.append(toy.getName());
+                writer.append(CSV_SEPARATOR);
+                writer.append(String.valueOf(toy.getAmount()));
+                writer.append(CSV_SEPARATOR);
+                writer.append(String.valueOf(toy.getDropFrequency()));
+                writer.append("\n");
+            }
+
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

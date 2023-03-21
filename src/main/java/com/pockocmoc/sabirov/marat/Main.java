@@ -1,11 +1,11 @@
 package com.pockocmoc.sabirov.marat;
 
-import com.pockocmoc.sabirov.marat.view.View;
+import com.pockocmoc.sabirov.marat.view.Run;
 
 public class Main {
     public static void main(String[] args) {
-        View view = new View();
-        view.run();
+        Run run = new Run();
+        run.run();
     }
 
 }

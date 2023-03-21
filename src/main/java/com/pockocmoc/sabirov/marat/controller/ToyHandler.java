@@ -27,14 +27,21 @@ public class ToyHandler {
     }
 
     private static int getNewToyId() {
-        int count = 0;
+        int maxId = 0;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME_TOYS));
-
-            while (reader.readLine() != null) count++;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                int id = Integer.parseInt(values[0].replaceAll("\"", ""));
+                if (id > maxId) {
+                    maxId = id;
+                }
+            }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } return count;
+        }
+        return maxId + 1;
     }
 }

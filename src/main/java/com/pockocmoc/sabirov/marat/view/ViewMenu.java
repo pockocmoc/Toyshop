@@ -1,6 +1,6 @@
 package com.pockocmoc.sabirov.marat.view;
 
-public class Menu {
+public class ViewMenu {
     public static void delimiter() {
         System.out.println("*".repeat(50));
     }
@@ -22,7 +22,7 @@ public class Menu {
         System.out.println("Выберите пункт меню:");
         System.out.println("1. Посмотреть все игрушки.");
         System.out.println("2. Добавить новую игрушку.");
-        System.out.println("3. Изменить вес игрушки(шанс выпадения игругшки.");
+        System.out.println("3. Изменить вес игрушки(шанс выпадения игрушки)");
         System.out.println("4. Удалить игрушку.");
         System.out.println("5. Выход в главное меню");
     }

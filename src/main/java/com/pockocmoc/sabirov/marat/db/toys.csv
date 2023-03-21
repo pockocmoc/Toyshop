@@ -1,11 +1,6 @@
-id,name,amount,dropFrequency
-1,Duplo,10,5
+1,Duplo,10,50
 2,Barby,3,2
-3,Logog,2,4
-4,skf,3,5
 5,YoYo,3,2
-6,Tetris,3,5
-7,Gop,2,4
 8,Ball,2,4
 9,CubicRubic,2,3
 10,Tetris,1,3
@@ -14,3 +9,7 @@ id,name,amount,dropFrequency
 13,Xbox,10,4
 14,Switch,8,1
 15,Snes,5,4
+16,Sega,9,3
+14,Lust of us Ps5,2,4
+17,ToW Switch,8,2
+18,Lego City,12,10
