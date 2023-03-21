@@ -57,12 +57,11 @@ public class Buyer {
 
     @Override
     public String toString() {
-        return "Buyer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", checkNumber=" + checkNumber +
-                ", phoneNumber=" + phoneNumber +
-                '}';
+        return "\nПокупатель " +
+                "№ " + id +
+                ", '" + name + '\'' +
+                ", '" + surname + '\'' +
+                ", чек: " + checkNumber +
+                ", телефон: " + phoneNumber;
     }
 }

@@ -1,5 +1,6 @@
 package com.pockocmoc.sabirov.marat.view;
 
+import com.pockocmoc.sabirov.marat.controller.BuyerCSVHandler;
 import com.pockocmoc.sabirov.marat.controller.ToyCSVHandler;
 
 public class Run {
@@ -16,7 +17,7 @@ public class Run {
                     runToys();
                     break;
                 case 2:
-                    ViewMenu.pageBuyersView();
+                    runBuyers();
                     break;
                 case 3:
                     break;
@@ -63,5 +64,29 @@ public class Run {
                     System.out.println("Некорректный ввод.");
             }
         } while (numberOfMenu != 5);
+    }
+
+    public void runBuyers() {
+        int numberOfMenu;
+        do {
+            ViewMenu.pageBuyersView();
+            numberOfMenu = InputNumberValidator.choice();
+            switch (numberOfMenu) {
+                case 1:
+                    System.out.println(BuyerCSVHandler.readFromFile(FILE_NAME_BUYERS));
+                    break;
+                case 2:
+                    BuyerCSVHandler.addNewBuyer();
+                    System.out.println("Новый покупатель добавлен!");
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    break;
+                default:
+                    System.out.println("Некорректный ввод.");
+            }
+        } while (numberOfMenu != 4);
     }
 }
