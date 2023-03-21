@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.pockocmoc.sabirov.marat.controller.ToyCSVHandler.CSV_SEPARATOR;
+
 public class BuyerCSVHandler {
     private static final String DELIMITER = ",";
     private static final String FILE_NAME_BUYERS = "./src/main/java/com/pockocmoc/sabirov/marat/db/buyers.csv";
@@ -29,10 +31,15 @@ public class BuyerCSVHandler {
         buyers.add(new Buyer(getBuyerId(), nameBuyer, surnameBuyer, check, phoneNumber));
         BuyerCSVHandler.writeToBuyersFile(FILE_NAME_BUYERS, buyers);
     }
+
     private static int getBuyerId() {
+        return startId(FILE_NAME_BUYERS);
+    }
+
+    static int startId(String fileNameBuyers) {
         int maxId = 0;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME_BUYERS));
+            BufferedReader reader = new BufferedReader(new FileReader(fileNameBuyers));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
@@ -47,22 +54,27 @@ public class BuyerCSVHandler {
         }
         return maxId + 1;
     }
+
     public static void writeToBuyersFile(String fileName, List<Buyer> buyers) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            for (Buyer buyer : buyers) {
-                writer.append(String.valueOf(buyer.getId()));
-                writer.append(DELIMITER);
-                writer.append(buyer.getName());
-                writer.append(DELIMITER);
-                writer.append(buyer.getSurname());
-                writer.append(DELIMITER);
-                writer.append(String.valueOf(buyer.getCheckNumber()));
-                writer.append(DELIMITER);
-                writer.append(String.valueOf(buyer.getPhoneNumber()));
-                writer.append("\n");
-            }
+            appendLineBuyers(buyers, writer, DELIMITER);
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            System.err.println("Ошибка чтения из файла: " + e.getMessage());
+        }
+    }
+
+    private static void appendLineBuyers(List<Buyer> buyers, FileWriter writer, String delimiter) throws IOException {
+        for (Buyer buyer : buyers) {
+            writer.append(String.valueOf(buyer.getId()));
+            writer.append(delimiter);
+            writer.append(buyer.getName());
+            writer.append(delimiter);
+            writer.append(buyer.getSurname());
+            writer.append(delimiter);
+            writer.append(String.valueOf(buyer.getCheckNumber()));
+            writer.append(delimiter);
+            writer.append(String.valueOf(buyer.getPhoneNumber()));
+            writer.append("\n");
         }
     }
 
@@ -80,8 +92,36 @@ public class BuyerCSVHandler {
                 buyers.add(new Buyer(id, name, surname, checkNumber, phoneNumber));
             }
         } catch (IOException e) {
-            System.err.println("Error reading from file: " + e.getMessage());
+            System.err.println("Ошибка чтения из файла: " + e.getMessage());
         }
         return buyers;
+    }
+
+    public static void removeBuyer(String fileName, int id) {
+        List<Buyer> buyerList = readFromFile(fileName);
+
+        for (Buyer buyer : buyerList) {
+            if (buyer.getId() == id) {
+                buyerList.remove(buyer);
+                break;
+            }
+        }
+
+        overwriteFileBuyers(fileName, buyerList);
+    }
+
+    public static void overwriteFileBuyers(String fileName, List<Buyer> buyers) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+
+            appendToFileLineBuyer(buyers, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void appendToFileLineBuyer(List<Buyer> buyers, FileWriter writer) throws IOException {
+        appendLineBuyers(buyers, writer, CSV_SEPARATOR);
+
+        writer.flush();
     }
 }

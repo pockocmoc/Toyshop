@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.pockocmoc.sabirov.marat.controller.BuyerCSVHandler.startId;
+
 public class ToyCSVHandler {
-    private static final String CSV_SEPARATOR = ",";
+    static final String CSV_SEPARATOR = ",";
     private static final String FILE_NAME_TOYS = "./src/main/java/com/pockocmoc/sabirov/marat/db/toys.csv";
     static List<Toy> toys = new ArrayList<>();
 //    private static final String FILE_HEADER = "id,name,amount,dropFrequency";
@@ -36,22 +38,7 @@ public class ToyCSVHandler {
     }
 
     private static int getNewToyId() {
-        int maxId = 0;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME_TOYS));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] values = line.split(",");
-                int id = Integer.parseInt(values[0].replaceAll("\"", ""));
-                if (id > maxId) {
-                    maxId = id;
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return maxId + 1;
+        return startId(FILE_NAME_TOYS);
     }
 
     private static void appendToFileLine(List<Toy> toys, FileWriter writer) throws IOException {

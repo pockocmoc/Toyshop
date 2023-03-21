@@ -80,12 +80,16 @@ public class Run {
                     System.out.println("Новый покупатель добавлен!");
                     break;
                 case 3:
-
+                    System.out.println(BuyerCSVHandler.readFromFile(FILE_NAME_BUYERS));
+                    System.out.println("Введите № покупателя для его удаления: ");
+                    int num = InputNumberValidator.choice();
+                    BuyerCSVHandler.removeBuyer(FILE_NAME_BUYERS, num);
+                    System.out.println("Покупатель удален!");
                     break;
                 case 4:
                     break;
                 default:
-                    System.out.println("Некорректный ввод.");
+                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
             }
         } while (numberOfMenu != 4);
     }
