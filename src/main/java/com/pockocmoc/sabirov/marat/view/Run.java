@@ -47,11 +47,7 @@ public class Run {
                     System.out.println(ToyCSVHandler.readFromFile(FILE_NAME_TOYS));
                     System.out.println("Введите № игрушки для изменения веса игрушки: ");
                     int idToy = InputNumberValidator.choice();
-                    System.out.println("Введите новый вес игрушки: ");
-                    int changeWeight = InputNumberValidator.choice();
-                    ToyCSVHandler.updateToyDropFrequencyById(FILE_NAME_TOYS, idToy
-                            , changeWeight);
-//                    System.out.println("Вес изменен!");
+                    ToyCSVHandler.updateToyDropFrequencyById(FILE_NAME_TOYS, idToy);
                     break;
                 case 4:
                     System.out.println(ToyCSVHandler.readFromFile(FILE_NAME_TOYS));
@@ -61,7 +57,7 @@ public class Run {
                 case 5:
                     break;
                 default:
-                    System.out.println("Некорректный ввод.");
+                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
             }
         } while (numberOfMenu != 5);
     }

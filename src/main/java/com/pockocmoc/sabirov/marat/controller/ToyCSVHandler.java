@@ -1,6 +1,7 @@
 package com.pockocmoc.sabirov.marat.controller;
 
 import com.pockocmoc.sabirov.marat.model.Toy;
+import com.pockocmoc.sabirov.marat.view.InputNumberValidator;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -56,23 +57,34 @@ public class ToyCSVHandler {
         writer.flush();
     }
 
-    public static void updateToyDropFrequencyById(String fileName, int id, int newDropFrequency) {
+    public static void updateToyDropFrequencyById(String fileName, int id) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             List<Toy> toys = new ArrayList<>();
             String line;
+
+            boolean idFound = false;
+
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(CSV_SEPARATOR);
                 int toyId = Integer.parseInt(fields[0]);
                 String name = fields[1];
                 int amount = Integer.parseInt(fields[2]);
                 int dropFrequency = Integer.parseInt(fields[3]);
+                int changeWeight;
                 if (toyId == id) {
-                    toys.add(new Toy(toyId, name, amount, newDropFrequency));
+                    System.out.println("Введите новый вес игрушки: ");
+                    changeWeight = InputNumberValidator.choice();
+                    toys.add(new Toy(toyId, name, amount, changeWeight));
                     System.out.println("Вес игрушки изменён!");
+                    idFound = true;
                 } else {
                     toys.add(new Toy(toyId, name, amount, dropFrequency));
                 }
+
+            }if (!idFound) {
+                System.out.println("Ошибка, нет игрушки с таким номером!");
             }
+
             overwriteFile(fileName, toys);
         } catch (IOException e) {
             e.printStackTrace();
