@@ -68,6 +68,7 @@ public class ToyCSVHandler {
                 int dropFrequency = Integer.parseInt(fields[3]);
                 if (toyId == id) {
                     toys.add(new Toy(toyId, name, amount, newDropFrequency));
+                    System.out.println("Вес игрушки изменён!");
                 } else {
                     toys.add(new Toy(toyId, name, amount, dropFrequency));
                 }
@@ -106,12 +107,17 @@ public class ToyCSVHandler {
 
     public static void removeToy(String fileName, int id) {
         List<Toy> toys = readFromFile(fileName);
-
+        boolean isToyFound = false;
         for (Toy toy : toys) {
             if (toy.getId() == id) {
                 toys.remove(toy);
+                System.out.println("Игрушка удалена!");
+                isToyFound = true;
                 break;
             }
+        }
+        if (!isToyFound) {
+            System.out.println("Нет игрушки с таким номером!");
         }
 
         overwriteFile(fileName, toys);

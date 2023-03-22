@@ -37,10 +37,9 @@ public class Prize {
 
     @Override
     public String toString() {
-        return "Prize{" +
-                "id=" + id +
-                ", buyer=" + buyer +
-                ", toy=" + toy +
-                '}';
+        return "Приз " +
+                "№ " + id +
+                ", " + buyer +
+                ", " + toy;
     }
 }

@@ -97,14 +97,22 @@ public class BuyerCSVHandler {
         return buyers;
     }
 
+
     public static void removeBuyer(String fileName, int id) {
         List<Buyer> buyerList = readFromFile(fileName);
+        boolean isBuyerFound = false;
 
         for (Buyer buyer : buyerList) {
             if (buyer.getId() == id) {
                 buyerList.remove(buyer);
+                System.out.println("Покупатель удален!");
+                isBuyerFound = true;
                 break;
             }
+        }
+
+        if (!isBuyerFound) {
+            System.out.println("Нет покупателя с таким номером!");
         }
 
         overwriteFileBuyers(fileName, buyerList);
