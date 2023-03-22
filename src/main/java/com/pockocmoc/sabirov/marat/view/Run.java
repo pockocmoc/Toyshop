@@ -106,9 +106,11 @@ public class Run {
                     break;
                 case 4:
                     break;
+                case 5:
+                    break;
                 default:
                     System.out.println("Некорректный ввод. Попробуйте еще раз.");
             }
-        } while (numberOfMenu != 4);
+        } while (numberOfMenu != 5);
     }
 }

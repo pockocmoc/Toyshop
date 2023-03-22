@@ -42,8 +42,9 @@ public class ViewMenu {
         delimiter();
         System.out.println("Выберите пункт меню:");
         System.out.println("1. Список призовых игрушек.");
-        System.out.println("2. Разыграть игрушку, для добавления ее в список призовых игрушек.");
-        System.out.println("3. Получить призовую игрушку из списка.");
-        System.out.println("4. Выход в главное меню.");
+        System.out.println("2. Список разыгранных игрушек.");
+        System.out.println("3. Разыграть игрушку, для добавления ее в список призовых игрушек.");
+        System.out.println("4. Розыгрыш игрушек среди покупателей.");
+        System.out.println("5. Выход в главное меню.");
     }
 }
