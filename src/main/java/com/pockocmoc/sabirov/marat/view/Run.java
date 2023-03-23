@@ -2,10 +2,19 @@ package com.pockocmoc.sabirov.marat.view;
 
 import com.pockocmoc.sabirov.marat.controller.BuyerCSVHandler;
 import com.pockocmoc.sabirov.marat.controller.ToyCSVHandler;
+import com.pockocmoc.sabirov.marat.model.Prize;
+import com.pockocmoc.sabirov.marat.model.Toy;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.pockocmoc.sabirov.marat.controller.ToyCSVHandler.chooseRandomToyAndSaveToFile;
 
 public class Run {
     final String FILE_NAME_TOYS = "./src/main/java/com/pockocmoc/sabirov/marat/db/toys.csv";
     final String FILE_NAME_BUYERS = "./src/main/java/com/pockocmoc/sabirov/marat/db/buyers.csv";
+    final String PRIZE_TOY  = "./src/main/java/com/pockocmoc/sabirov/marat/db/PrizeToyList.csv";
+    final String AWARDED_TOY = "./src/main/java/com/pockocmoc/sabirov/marat/db/AwardedToyFromByuers.csv";
 
     public void run() {
         int numberOfMenu;
@@ -96,13 +105,17 @@ public class Run {
             numberOfMenu = InputNumberValidator.choice();
             switch (numberOfMenu) {
                 case 1:
-
+                    System.out.println("Список призовых игрушек.");
+                    System.out.println(ToyCSVHandler.readFromFile(PRIZE_TOY));
                     break;
                 case 2:
-
+                    System.out.println("Список разыгранных игрушек игрушек.");
+                    System.out.println(ToyCSVHandler.readFromFile(AWARDED_TOY));
                     break;
                 case 3:
-
+                    List<Toy> toys = ToyCSVHandler.readFromFile(FILE_NAME_TOYS);
+                    List<Prize> prizeToys = new ArrayList<>();
+                    chooseRandomToyAndSaveToFile(toys, prizeToys, PRIZE_TOY);
                     break;
                 case 4:
                     break;

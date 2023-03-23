@@ -1,11 +1,13 @@
 package com.pockocmoc.sabirov.marat.controller;
 
+import com.pockocmoc.sabirov.marat.model.Prize;
 import com.pockocmoc.sabirov.marat.model.Toy;
 import com.pockocmoc.sabirov.marat.view.InputNumberValidator;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import static com.pockocmoc.sabirov.marat.controller.BuyerCSVHandler.startId;
@@ -142,5 +144,43 @@ public class ToyCSVHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static void writeToPrizeToys(String fileName, List<Prize> prizes) {
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+
+            appendToPrize(prizes, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void appendToPrize(List<Prize> prizes, FileWriter writer) throws IOException {
+        for (Prize prize : prizes) {
+            writer.append(String.valueOf(prize.getId()));
+            writer.append(CSV_SEPARATOR);
+            writer.append(prize.getName());
+            writer.append(CSV_SEPARATOR);
+            writer.append(String.valueOf(prize.getAmount()));
+            writer.append(CSV_SEPARATOR);
+            writer.append(String.valueOf(prize.getDropFrequency()));
+            writer.append("\n");
+        }
+
+        writer.flush();
+    }
+    public static void chooseRandomToyAndSaveToFile(List<Toy> toys, List<Prize> prizeToys, String fileName) {
+        if (toys.isEmpty()) {
+            return;
+        }
+        Random random = new Random();
+        int index = random.nextInt(toys.size());
+        Toy chosenToy = toys.get(index);
+        Prize prizeToy = new Prize(
+                chosenToy.getId(),
+                chosenToy.getName(),
+                chosenToy.getAmount(),
+                chosenToy.getDropFrequency());
+        prizeToys.add(prizeToy);
+        ToyCSVHandler.writeToPrizeToys(fileName, prizeToys);
     }
 }
