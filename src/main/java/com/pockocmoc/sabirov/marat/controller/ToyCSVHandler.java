@@ -83,7 +83,8 @@ public class ToyCSVHandler {
                     toys.add(new Toy(toyId, name, amount, dropFrequency));
                 }
 
-            }if (!idFound) {
+            }
+            if (!idFound) {
                 System.out.println("Ошибка, нет игрушки с таким номером!");
             }
 
@@ -145,6 +146,7 @@ public class ToyCSVHandler {
             e.printStackTrace();
         }
     }
+
     public static void writeToPrizeToys(String fileName, List<Prize> prizes) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
 
@@ -168,6 +170,7 @@ public class ToyCSVHandler {
 
         writer.flush();
     }
+
     public static void chooseRandomToyAndSaveToFile(List<Toy> toys, List<Prize> prizeToys, String fileName) {
         if (toys.isEmpty()) {
             return;
@@ -178,9 +181,25 @@ public class ToyCSVHandler {
         Prize prizeToy = new Prize(
                 chosenToy.getId(),
                 chosenToy.getName(),
-                chosenToy.getAmount(),
+                1,
                 chosenToy.getDropFrequency());
         prizeToys.add(prizeToy);
+        chosenToy.setAmount(chosenToy.getAmount() - 1);
+        if (chosenToy.getAmount() == 0) {
+            toys.remove(chosenToy);
+        }
         ToyCSVHandler.writeToPrizeToys(fileName, prizeToys);
     }
+    
+//    public static void choosePrizeRandom(List<Prize> prizes, String fileName) {
+//        if (prizes.isEmpty()) {
+//            return;
+//        }
+//        Random random = new Random();
+//        int index = random.nextInt(prizes.size());
+//        Prize prize = prizes.get(index);
+//
+//
+//        )
+//    }
 }
