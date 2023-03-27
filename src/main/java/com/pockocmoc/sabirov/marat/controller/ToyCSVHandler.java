@@ -16,8 +16,12 @@ import static com.pockocmoc.sabirov.marat.controller.BuyerCSVHandler.startId;
 public class ToyCSVHandler {
     static final String CSV_SEPARATOR = ",";
     private static final String FILE_NAME_TOYS = "./src/main/java/com/pockocmoc/sabirov/marat/db/toys.csv";
+    static final String PRIZE_TOY = "./src/main/java/com/pockocmoc/sabirov/marat/db/PrizeToyList.csv";
+    final String AWARDED_TOY = "./src/main/java/com/pockocmoc/sabirov/marat/db/AwardedToyFromByuers.csv";
     static List<Toy> toys = new ArrayList<>();
-//    private static final String FILE_HEADER = "id,name,amount,dropFrequency";
+
+    static List<Prize> prizes = new ArrayList<>();
+    static List<AwardedPrize> awardedPrizes = new ArrayList<>();
 
 
     public static void writeToFile(String fileName, List<Toy> toys) {
@@ -156,31 +160,6 @@ public class ToyCSVHandler {
         return toys;
     }
 
-    public static List<Prize> readFilePrize(String fileName) {
-        List<Prize> prizes = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-
-                String[] fields = line.split(CSV_SEPARATOR);
-
-                int id = Integer.parseInt(fields[0]);
-                String name = fields[1];
-                int amount = Integer.parseInt(fields[2]);
-                int dropFrequency = Integer.parseInt(fields[3]);
-
-
-                Toy toy = new Toy(id, name, amount, dropFrequency);
-                toys.add(toy);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return prizes;
-    }
 
     public static void removeToy(String fileName, int id) {
         List<Toy> toys = readFromFile(fileName);
@@ -233,7 +212,8 @@ public class ToyCSVHandler {
         writer.flush();
     }
 
-    public static void chooseRandomToyAndSaveToFile(List<Toy> toys, List<Prize> prizeToys, String fileName) {
+
+    public static void chooseRandomToyAndSaveToFile(String fileTwo) {
         if (toys.isEmpty()) {
             return;
         }
@@ -243,19 +223,21 @@ public class ToyCSVHandler {
         Prize prizeToy = new Prize(
                 chosenToy.getId(),
                 chosenToy.getName(),
-                1,
+                chosenToy.getAmount(),
                 chosenToy.getDropFrequency());
-        prizeToys.add(prizeToy);
-        chosenToy.setAmount(chosenToy.getAmount() - 1);
-//        ToyCSVHandler.updateToyAmountById(fileName, index, chosenToy.getAmount() - 1);
-        if (chosenToy.getAmount() == 0) {
-            ToyCSVHandler.removeToy(fileName, index);
-        }
-        ToyCSVHandler.writeToPrizeToys(fileName, prizeToys);
+        prizes.add(prizeToy);
+        toys.remove(chosenToy);
+//        chosenToy.setAmount(chosenToy.getAmount() - 1);
+//        ToyCSVHandler.updateToyAmountById(fileName, chosenToy.getId(), chosenToy.getAmount());
+//        ToyCSVHandler.removeToy(FILE_NAME_TOYS, chosenToy.getId());
+//        if (chosenToy.getAmount() == 0) {
+//            toys.remove(chosenToy);
+//            ToyCSVHandler.removeToy(fileName, chosenToy.getId());
+//        }
+        ToyCSVHandler.writeToPrizeToys(fileTwo, prizes);
     }
 
-    public static void chooseAwardedPrizeRandom(List<Prize> prizes, List<AwardedPrize> awardedPrizes,
-                                                String fileName, String fileTwo) {
+    public static void chooseAwardedPrizeRandom(String fileName, String fileTwo) {
         if (prizes.isEmpty()) {
             return;
         }
