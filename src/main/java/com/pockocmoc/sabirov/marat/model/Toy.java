@@ -15,7 +15,10 @@ public class Toy {
         this.dropFrequency = dropFrequency;
     }
 
-
+    public Toy(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
 
     public int getId() {
