@@ -181,10 +181,17 @@ public class ToyCSVHandler {
         List<Toy> toys = readFromFile(fileName);
         if (toys.isEmpty()) {
             System.out.println("Ошибка: игрушек пока нет!");
+            return;
         }
         List<Prize> prizeToys = new ArrayList<>();
         Random random = new Random();
         Toy randomToy = toys.get(random.nextInt(toys.size()));
+        if (randomToy.getAmount() <= 0) {
+            System.out.println("Ошибка: такой игрушки больше нет!");
+            return;
+        }
+        randomToy.setAmount(randomToy.getAmount() - 1);
+        overwriteFile(fileName, toys);
         Prize prizeToy = new Prize(randomToy.getId(), randomToy.getName());
         prizeToys.add(prizeToy);
         writeToPrizeToys(fileTwo, prizeToys);
