@@ -1,7 +1,5 @@
 package com.pockocmoc.sabirov.marat.model;
 
-import java.util.List;
-
 public class Toy {
     private int id;
     private String name;

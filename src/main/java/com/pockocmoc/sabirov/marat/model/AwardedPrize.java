@@ -7,8 +7,4 @@ public class AwardedPrize extends Prize{
         super(id, name);
     }
 
-    @Override
-    public String toString() {
-        return "Номер " + getId() + " Название " + getName();
-    }
 }

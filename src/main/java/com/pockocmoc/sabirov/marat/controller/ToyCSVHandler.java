@@ -5,7 +5,10 @@ import com.pockocmoc.sabirov.marat.model.Prize;
 import com.pockocmoc.sabirov.marat.model.Toy;
 import com.pockocmoc.sabirov.marat.view.InputNumberValidator;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,12 +19,7 @@ import static com.pockocmoc.sabirov.marat.controller.BuyerCSVHandler.startId;
 public class ToyCSVHandler {
     static final String CSV_SEPARATOR = ",";
     private static final String FILE_NAME_TOYS = "./src/main/java/com/pockocmoc/sabirov/marat/db/toys.csv";
-    static final String PRIZE_TOY = "./src/main/java/com/pockocmoc/sabirov/marat/db/PrizeToyList.csv";
-    final String AWARDED_TOY = "./src/main/java/com/pockocmoc/sabirov/marat/db/AwardedToyFromByuers.csv";
     static List<Toy> toys = new ArrayList<>();
-
-    static List<Prize> prizes = new ArrayList<>();
-    static List<AwardedPrize> awardedPrizes = new ArrayList<>();
 
 
     public static void writeToFile(String fileName, List<Toy> toys) {
@@ -99,40 +97,6 @@ public class ToyCSVHandler {
         }
     }
 
-    public static void updateToyAmountById(String fileName, int id, int amounts) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            List<Toy> toys = new ArrayList<>();
-            String line;
-
-            boolean idFound = false;
-
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(CSV_SEPARATOR);
-                int toyId = Integer.parseInt(fields[0]);
-                String name = fields[1];
-                int amount = Integer.parseInt(fields[2]);
-                int dropFrequency = Integer.parseInt(fields[3]);
-                int changeWeight;
-                if (toyId == id) {
-//                    System.out.println("Введите новый вес игрушки: ");
-//                    changeWeight = InputNumberValidator.choice();
-                    toys.add(new Toy(toyId, name, amounts, dropFrequency));
-//                    System.out.println("Вес игрушки изменён!");
-                    idFound = true;
-                } else {
-                    toys.add(new Toy(toyId, name, amount, dropFrequency));
-                }
-
-            }
-            if (!idFound) {
-                System.out.println("Ошибка, нет игрушки с таким номером!");
-            }
-
-            overwriteFile(fileName, toys);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static List<Toy> readFromFile(String fileName) {
         List<Toy> toys = new ArrayList<>();
@@ -188,6 +152,7 @@ public class ToyCSVHandler {
         }
     }
 
+
     public static void writeToPrizeToys(String fileName, List<Prize> prizes) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
 
@@ -212,51 +177,62 @@ public class ToyCSVHandler {
         writer.flush();
     }
 
-
-    public static void chooseRandomToyAndSaveToFile(String fileTwo) {
-        if (toys.isEmpty()) {
-            return;
-        }
+    public static void addRandomToyToPrizeFile(String fileName, String fileTwo) {
+        List<Toy> toys = readFromFile(fileName);
+        List<Prize> prizeToys = new ArrayList<>();
         Random random = new Random();
-        int index = random.nextInt(toys.size());
-        Toy chosenToy = toys.get(index);
-        Prize prizeToy = new Prize(
-                chosenToy.getId(),
-                chosenToy.getName(),
-                chosenToy.getAmount(),
-                chosenToy.getDropFrequency());
-        prizes.add(prizeToy);
-        toys.remove(chosenToy);
-//        chosenToy.setAmount(chosenToy.getAmount() - 1);
-//        ToyCSVHandler.updateToyAmountById(fileName, chosenToy.getId(), chosenToy.getAmount());
-//        ToyCSVHandler.removeToy(FILE_NAME_TOYS, chosenToy.getId());
-//        if (chosenToy.getAmount() == 0) {
-//            toys.remove(chosenToy);
-//            ToyCSVHandler.removeToy(fileName, chosenToy.getId());
-//        }
-        ToyCSVHandler.writeToPrizeToys(fileTwo, prizes);
+        Toy randomToy = toys.get(random.nextInt(toys.size()));
+        Prize prizeToy = new Prize(randomToy.getId(), randomToy.getName());
+        prizeToys.add(prizeToy);
+        writeToPrizeToys(fileTwo, prizeToys);
     }
 
-    public static void chooseAwardedPrizeRandom(String fileName, String fileTwo) {
-        if (prizes.isEmpty()) {
+    public static void addRandomPrizeToAwardedFileAndDeleteAwardedPrize(String fileName, String fileTwo) {
+        List<Prize> prizeList = readPrizeFile(fileName);
+        if (prizeList.isEmpty()) {
+            System.out.println("Ошибка: призов пока нет!");
             return;
         }
+        List<AwardedPrize> awardedPrizeList = new ArrayList<>();
         Random random = new Random();
-        int index = random.nextInt(prizes.size());
-        Prize chosenPrize = prizes.get(index);
-        AwardedPrize awardedPrize = new AwardedPrize(
-                chosenPrize.getId(),
-                chosenPrize.getName());
-        awardedPrizes.add(awardedPrize);
-        chosenPrize.setAmount(chosenPrize.getAmount() + 1);
-        if (chosenPrize.getAmount() == 0) {
-            toys.remove(chosenPrize);
-            ToyCSVHandler.removePrizeToy(fileName, index);
-        }
-        ToyCSVHandler.writeToAwardedPrizeToys(fileTwo, awardedPrizes);
-
-
+        Prize randomPrize = prizeList.get(random.nextInt(prizeList.size()));
+        AwardedPrize awardedPrize = new AwardedPrize(randomPrize.getId(), randomPrize.getName());
+        awardedPrizeList.add(awardedPrize);
+        writeToAwardedPrizeToys(fileTwo, awardedPrizeList);
+        removePrizeFromListAndRewriteFile(fileName, randomPrize.getName());
     }
+
+    public static void removePrizeFromListAndRewriteFile(String fileName, String prizeName) {
+        List<Prize> prizeList = readPrizeFile(fileName);
+        for (Prize prize : prizeList) {
+            if (prize.getName().equals(prizeName)) {
+                prizeList.remove(prize);
+                break;
+            }
+        }
+        overwritePrizeFile(fileName, prizeList);
+    }
+
+    public static void overwritePrizeFile(String fileName, List<Prize> prizes) {
+        try (FileWriter writer = new FileWriter(fileName)) {
+
+            appendToPrizeFileLine(prizes, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void appendToPrizeFileLine(List<Prize> prizes, FileWriter writer) throws IOException {
+        for (Prize prize : prizes) {
+            writer.append(String.valueOf(prize.getId()));
+            writer.append(CSV_SEPARATOR);
+            writer.append(prize.getName());
+            writer.append("\n");
+        }
+
+        writer.flush();
+    }
+
 
     public static void writeToAwardedPrizeToys(String fileName, List<AwardedPrize> awardedPrizes) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -272,43 +248,12 @@ public class ToyCSVHandler {
             writer.append(String.valueOf(prize.getId()));
             writer.append(CSV_SEPARATOR);
             writer.append(prize.getName());
-            writer.append(CSV_SEPARATOR);
-            writer.append(String.valueOf(prize.getAmount()));
-            writer.append(CSV_SEPARATOR);
-            writer.append(String.valueOf(prize.getDropFrequency()));
             writer.append("\n");
         }
 
         writer.flush();
     }
 
-    public static void removePrizeToy(String fileName, int id) {
-        List<Prize> prizes = readPrizeFile(fileName);
-        boolean isToyFound = false;
-        for (Prize prize : prizes) {
-            if (prize.getId() == id) {
-                prizes.remove(prize);
-                System.out.println("Игрушка удалена!");
-                isToyFound = true;
-                break;
-            }
-        }
-        if (!isToyFound) {
-            System.out.println("Нет игрушки с таким номером!");
-        }
-
-        overwritePrizeFile(fileName, prizes);
-    }
-
-
-    public static void overwritePrizeFile(String fileName, List<Prize> prizes) {
-        try (FileWriter writer = new FileWriter(fileName)) {
-
-            appendToPrize(prizes, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static List<Prize> readPrizeFile(String fileName) {
         List<Prize> prizes = new ArrayList<>();
@@ -318,16 +263,10 @@ public class ToyCSVHandler {
             String line;
 
             while ((line = reader.readLine()) != null) {
-
                 String[] fields = line.split(CSV_SEPARATOR);
-
                 int id = Integer.parseInt(fields[0]);
                 String name = fields[1];
-                int amount = Integer.parseInt(fields[2]);
-                int dropFrequency = Integer.parseInt(fields[3]);
-
-
-                Prize prize = new Prize(id, name, amount, dropFrequency);
+                Prize prize = new Prize(id, name);
                 prizes.add(prize);
             }
         } catch (IOException e) {
@@ -336,4 +275,5 @@ public class ToyCSVHandler {
 
         return prizes;
     }
+
 }

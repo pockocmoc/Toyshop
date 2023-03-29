@@ -45,16 +45,17 @@ package com.pockocmoc.sabirov.marat.model;
 
 //}
 
-public class Prize extends Toy{
+public class Prize extends Toy {
 
-    public Prize(int id, String name, int amount, int dropFrequency) {
-        super(id, name, amount, dropFrequency);
-    }
 
     public Prize(int id, String name) {
         super(id, name);
 
     }
 
+    @Override
+    public String toString() {
+        return "\nНомер: " + getId() + ","+ " Название: " + "\"" + getName() + "\"";
+    }
 
 }
