@@ -177,17 +177,45 @@ public class ToyCSVHandler {
         writer.flush();
     }
 
+
     public static void addRandomToyToPrizeFile(String fileName, String fileTwo) {
         List<Toy> toys = readFromFile(fileName);
         if (toys.isEmpty()) {
             System.out.println("Ошибка: игрушек пока нет!");
+            return;
         }
+        Toy randomToy = getRandomToy(toys);
+        assert randomToy != null;
+        if (randomToy.getAmount() <= 0) {
+            System.out.println("Ошибка: такой игрушки больше нет!");
+            return;
+        }
+        randomToy.setAmount(randomToy.getAmount() - 1);
+        overwriteFile(fileName, toys);
         List<Prize> prizeToys = new ArrayList<>();
-        Random random = new Random();
-        Toy randomToy = toys.get(random.nextInt(toys.size()));
         Prize prizeToy = new Prize(randomToy.getId(), randomToy.getName());
         prizeToys.add(prizeToy);
         writeToPrizeToys(fileTwo, prizeToys);
+    }
+
+    public static Toy getRandomToy(List<Toy> toyList) {
+        if (toyList.isEmpty()) {
+            System.out.println("Ошибка: игрушек пока нет!");
+            return null;
+        }
+        int totalWeight = 0;
+        for (Toy toy : toyList) {
+            totalWeight += toy.getDropFrequency();
+        }
+        int randomWeight = new Random().nextInt(totalWeight);
+        int currentWeight = 0;
+        for (Toy toy : toyList) {
+            currentWeight += toy.getDropFrequency();
+            if (currentWeight >= randomWeight) {
+                return toy;
+            }
+        }
+        return null;
     }
 
     public static void addRandomPrizeToAwardedFileAndDeleteAwardedPrize(String fileName, String fileTwo) {

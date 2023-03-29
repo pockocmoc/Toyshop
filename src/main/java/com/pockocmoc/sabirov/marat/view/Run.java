@@ -115,6 +115,8 @@ public class Run {
                     break;
                 case 4:
                     addRandomPrizeToAwardedFileAndDeleteAwardedPrize(PRIZE_TOY, AWARDED_TOY);
+                    System.out.println("Список разыгранных игрушек.");
+                    System.out.println(ToyCSVHandler.readPrizeFile(AWARDED_TOY));
                     break;
                 case 5:
                     break;
