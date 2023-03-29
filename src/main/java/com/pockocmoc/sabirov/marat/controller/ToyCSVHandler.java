@@ -179,6 +179,9 @@ public class ToyCSVHandler {
 
     public static void addRandomToyToPrizeFile(String fileName, String fileTwo) {
         List<Toy> toys = readFromFile(fileName);
+        if (toys.isEmpty()) {
+            System.out.println("Ошибка: игрушек пока нет!");
+        }
         List<Prize> prizeToys = new ArrayList<>();
         Random random = new Random();
         Toy randomToy = toys.get(random.nextInt(toys.size()));
