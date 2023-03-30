@@ -36,9 +36,9 @@ public class ToyCSVHandler {
         System.out.println("Введите имя игрушки: ");
         String name = scanner.nextLine();
         System.out.println("Введите количество игрушек: ");
-        int amount = scanner.nextInt();
+        int amount = InputNumberValidator.choice();
         System.out.println("Введите вес игрушки(шанс выпадения): ");
-        int dropFrequency = scanner.nextInt();
+        int dropFrequency = InputNumberValidator.choice();
         toys.add(new Toy(getNewToyId(), name, amount, dropFrequency));
         ToyCSVHandler.writeToFile(FILE_NAME_TOYS, toys);
     }
@@ -231,7 +231,7 @@ public class ToyCSVHandler {
         awardedPrizeList.add(awardedPrize);
         writeToAwardedPrizeToys(fileTwo, awardedPrizeList);
         removePrizeFromListAndRewriteFile(fileName, randomPrize.getName());
-        System.out.println("Игрушка " + randomPrize.getName() + " разыгрына!");
+        System.out.println("Игрушка " + randomPrize.getName() + " выдана!");
     }
 
     public static void removePrizeFromListAndRewriteFile(String fileName, String prizeName) {
