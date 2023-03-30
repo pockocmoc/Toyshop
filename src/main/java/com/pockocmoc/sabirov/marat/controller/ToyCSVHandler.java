@@ -231,6 +231,7 @@ public class ToyCSVHandler {
         awardedPrizeList.add(awardedPrize);
         writeToAwardedPrizeToys(fileTwo, awardedPrizeList);
         removePrizeFromListAndRewriteFile(fileName, randomPrize.getName());
+        System.out.println("Игрушка " + randomPrize.getName() + " разыгрына!");
     }
 
     public static void removePrizeFromListAndRewriteFile(String fileName, String prizeName) {
