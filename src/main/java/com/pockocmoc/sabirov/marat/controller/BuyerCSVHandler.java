@@ -1,6 +1,7 @@
 package com.pockocmoc.sabirov.marat.controller;
 
 import com.pockocmoc.sabirov.marat.model.Buyer;
+import com.pockocmoc.sabirov.marat.view.InputNumberValidator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -25,9 +26,9 @@ public class BuyerCSVHandler {
         System.out.println("Введите фамилию покупателя: ");
         String surnameBuyer = scanner.nextLine();
         System.out.println("Введите номера чека: ");
-        int check = scanner.nextInt();
+        int check = InputNumberValidator.choice();
         System.out.println("Введите номера телефона: ");
-        int phoneNumber = scanner.nextInt();
+        int phoneNumber = InputNumberValidator.choice();
         buyers.add(new Buyer(getBuyerId(), nameBuyer, surnameBuyer, check, phoneNumber));
         BuyerCSVHandler.writeToBuyersFile(FILE_NAME_BUYERS, buyers);
     }
@@ -65,15 +66,15 @@ public class BuyerCSVHandler {
 
     private static void appendLineBuyers(List<Buyer> buyers, FileWriter writer, String delimiter) throws IOException {
         for (Buyer buyer : buyers) {
-            writer.append(String.valueOf(buyer.getId()));
+            writer.append(String.valueOf(buyer.id()));
             writer.append(delimiter);
-            writer.append(buyer.getName());
+            writer.append(buyer.name());
             writer.append(delimiter);
-            writer.append(buyer.getSurname());
+            writer.append(buyer.surname());
             writer.append(delimiter);
-            writer.append(String.valueOf(buyer.getCheckNumber()));
+            writer.append(String.valueOf(buyer.checkNumber()));
             writer.append(delimiter);
-            writer.append(String.valueOf(buyer.getPhoneNumber()));
+            writer.append(String.valueOf(buyer.phoneNumber()));
             writer.append("\n");
         }
     }
@@ -103,7 +104,7 @@ public class BuyerCSVHandler {
         boolean isBuyerFound = false;
 
         for (Buyer buyer : buyerList) {
-            if (buyer.getId() == id) {
+            if (buyer.id() == id) {
                 buyerList.remove(buyer);
                 System.out.println("Покупатель удален!");
                 isBuyerFound = true;

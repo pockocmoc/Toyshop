@@ -30,7 +30,7 @@ public class Run {
                 case 4:
                     break;
                 default:
-                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
+                    System.out.println("\n\tНекорректный ввод. Попробуйте еще раз.");
             }
         } while (numberOfMenu != 4);
     }
@@ -50,19 +50,19 @@ public class Run {
                     break;
                 case 3:
                     System.out.println(ToyCSVHandler.readFromFile(FILE_NAME_TOYS));
-                    System.out.println("Введите № игрушки для изменения веса игрушки: ");
+                    System.out.println("\n\tВведите № игрушки для изменения веса игрушки: ");
                     int idToy = InputNumberValidator.choice();
                     ToyCSVHandler.updateToyDropFrequencyById(FILE_NAME_TOYS, idToy);
                     break;
                 case 4:
                     System.out.println(ToyCSVHandler.readFromFile(FILE_NAME_TOYS));
-                    System.out.println("Введите № игрушки для удаления: ");
+                    System.out.println("\n\tВведите № игрушки для удаления: ");
                     ToyCSVHandler.removeToy(FILE_NAME_TOYS, InputNumberValidator.choice());
                     break;
                 case 5:
                     break;
                 default:
-                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
+                    System.out.println("\n\tНекорректный ввод. Попробуйте еще раз.");
             }
         } while (numberOfMenu != 5);
     }
@@ -78,18 +78,18 @@ public class Run {
                     break;
                 case 2:
                     BuyerCSVHandler.addNewBuyer();
-                    System.out.println("Новый покупатель добавлен!");
+                    System.out.println("\n\tНовый покупатель добавлен!");
                     break;
                 case 3:
                     System.out.println(BuyerCSVHandler.readFromFile(FILE_NAME_BUYERS));
-                    System.out.println("Введите № покупателя для его удаления: ");
+                    System.out.println("\n\tВведите № покупателя для его удаления: ");
                     int num = InputNumberValidator.choice();
                     BuyerCSVHandler.removeBuyer(FILE_NAME_BUYERS, num);
                     break;
                 case 4:
                     break;
                 default:
-                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
+                    System.out.println("\n\tНекорректный ввод. Попробуйте еще раз.");
             }
         } while (numberOfMenu != 4);
     }
@@ -101,16 +101,16 @@ public class Run {
             numberOfMenu = InputNumberValidator.choice();
             switch (numberOfMenu) {
                 case 1:
-                    System.out.println("Список призовых игрушек.");
+                    System.out.println("\n\tСписок призовых игрушек.");
                     System.out.println(ToyCSVHandler.readPrizeFile(PRIZE_TOY));
                     break;
                 case 2:
-                    System.out.println("Список разыгранных игрушек.");
+                    System.out.println("\n\tСписок разыгранных игрушек.");
                     System.out.println(ToyCSVHandler.readPrizeFile(AWARDED_TOY));
                     break;
                 case 3:
                     addRandomToyToPrizeFile(FILE_NAME_TOYS, PRIZE_TOY);
-                    System.out.println("Список призовых игрушек.");
+                    System.out.println("\n\tСписок призовых игрушек.");
                     System.out.println(ToyCSVHandler.readPrizeFile(PRIZE_TOY));
                     break;
                 case 4:
@@ -119,7 +119,7 @@ public class Run {
                 case 5:
                     break;
                 default:
-                    System.out.println("Некорректный ввод. Попробуйте еще раз.");
+                    System.out.println("\n\tНекорректный ввод. Попробуйте еще раз.");
             }
         } while (numberOfMenu != 5);
     }

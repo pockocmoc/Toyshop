@@ -1,8 +1,8 @@
 package com.pockocmoc.sabirov.marat.model;
 
 public class Toy {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private int amount;
     private int dropFrequency;
 
@@ -23,17 +23,11 @@ public class Toy {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getAmount() {
         return amount;
@@ -47,9 +41,6 @@ public class Toy {
         return dropFrequency;
     }
 
-    public void setDropFrequency(int dropFrequency) {
-        this.dropFrequency = dropFrequency;
-    }
 
     @Override
     public String toString() {
